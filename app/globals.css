@@ -1,0 +1,248 @@
+@import "tailwindcss";
+
+/* ─── Tailwind v4 Theme Tokens ─── */
+@theme inline {
+  --color-black: #0A0A0A;
+  --color-crimson: #A1001A;
+  --color-crimson-dark: #7A0014;
+  --color-crimson-light: #CC1433;
+  --color-white: #FFFFFF;
+  --color-glass-light: rgba(255, 255, 255, 0.05);
+  --color-glass-border: rgba(255, 255, 255, 0.1);
+  --color-glass-hover: rgba(255, 255, 255, 0.08);
+  --color-text-muted: rgba(255, 255, 255, 0.6);
+  --color-text-dim: rgba(255, 255, 255, 0.4);
+
+  --font-serif: var(--font-playfair);
+  --font-sans: var(--font-inter);
+}
+
+/* ─── Base Styles ─── */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #0A0A0A;
+  color: #FFFFFF;
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+}
+
+::selection {
+  background-color: rgba(161, 0, 26, 0.4);
+  color: #FFFFFF;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0A0A0A;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(161, 0, 26, 0.5);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(161, 0, 26, 0.7);
+}
+
+/* ─── Grain Texture Overlay ─── */
+.grain-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* ─── Shimmer Animation ─── */
+@keyframes shimmer {
+  0% { transform: translateX(-150%) rotate(15deg); }
+  100% { transform: translateX(150%) rotate(15deg); }
+}
+
+.shimmer-overlay {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.03) 45%,
+    rgba(255, 255, 255, 0.06) 50%,
+    rgba(255, 255, 255, 0.03) 55%,
+    transparent 60%
+  );
+  animation: shimmer 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* ─── Scroll Indicator ─── */
+@keyframes scrollBounce {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  50% { transform: translateY(12px); opacity: 0.4; }
+}
+
+.scroll-indicator {
+  animation: scrollBounce 2s ease-in-out infinite;
+}
+
+/* ─── Glow Pulse ─── */
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(161, 0, 26, 0.2); }
+  50% { box-shadow: 0 0 40px rgba(161, 0, 26, 0.4); }
+}
+
+.glow-pulse {
+  animation: glowPulse 3s ease-in-out infinite;
+}
+
+/* ─── Glass Card ─── */
+.glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(161, 0, 26, 0.3);
+  box-shadow: 0 0 30px rgba(161, 0, 26, 0.15);
+}
+
+/* ─── Button Ripple ─── */
+@keyframes ripple {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.btn-luxury {
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-luxury:hover {
+  border-color: rgba(161, 0, 26, 0.6);
+  box-shadow: 0 0 30px rgba(161, 0, 26, 0.2);
+}
+
+.btn-luxury::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.05),
+    transparent
+  );
+  transform: translateX(-100%);
+}
+
+.btn-luxury:hover::after {
+  animation: ripple 0.8s ease-in-out;
+}
+
+/* ─── Floating Label Inputs ─── */
+.luxury-input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  outline: none;
+  color: white;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  transition: border-color 0.4s ease;
+  caret-color: #A1001A;
+}
+
+.luxury-input:focus {
+  border-bottom-color: #A1001A;
+}
+
+.luxury-input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+  transition: opacity 0.3s ease;
+}
+
+.luxury-input:focus::placeholder {
+  opacity: 0;
+}
+
+/* ─── Vignette Effect ─── */
+.vignette {
+  box-shadow:
+    inset 0 0 120px 60px rgba(10, 10, 10, 0.8),
+    inset 0 0 300px 100px rgba(10, 10, 10, 0.5);
+}
+
+/* ─── Section Divider ─── */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(161, 0, 26, 0.4),
+    transparent
+  );
+}
+
+/* ─── Mobile Specific ─── */
+@media (max-width: 640px) {
+  /* Prevent horizontal overflow */
+  html, body {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
+  /* Remove hover effects on touch */
+  .glass-card:hover {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: none;
+  }
+
+  /* Make tap targets feel responsive */
+  .btn-luxury:active {
+    transform: scale(0.98);
+    border-color: rgba(161, 0, 26, 0.6);
+  }
+
+  /* Increase touch target for inputs */
+  .luxury-input {
+    font-size: 16px; /* Prevents iOS zoom on focus */
+    padding-top: 0.875rem;
+    padding-bottom: 0.875rem;
+  }
+}
+
+/* Safe area padding for notched devices */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  footer {
+    padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
+  }
+}
+
+/* Tap highlight color */
+* {
+  -webkit-tap-highlight-color: rgba(161, 0, 26, 0.1);
+}
+
